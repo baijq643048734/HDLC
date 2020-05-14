@@ -1,0 +1,80 @@
+/*********************************************
+@ author : Bai Jiaqi 白嘉麒 
+@ ID : 161720328
+@ class: 1617203
+@ date : 2020/5/11
+@ instructor :Teacher Ye Haibo 叶海波老师 
+**********************************************/
+
+/*********************************************
+@ 完成了HDLC最基本的协议内容,包括:
+@ 1. 组帧 拆帧 对帧进行分析
+@ 2. 连接的建立与拆除
+@ 3. 实用停等协议的模拟演示
+@ 4. CRC校验 
+@ Attention: 由于Dev-C++ 编译器多文件连编时
+@            总是找不到头文件内容 故把所有
+@	函数都放入main.cpp中，造成阅读
+@	不便 尽情谅解! ^_^
+**********************************************/
+
+注：在编写过程中使用的是Dev-C++编译器，若老师使用VS、Clion或其他编译器，则文件中的中文注释可能会成乱码。
+
+/ frame.h此处函数均为组帧操作内部调用函数************											
+int _2_x(int x);			//2的x次方
+void char_to_bit(char letter, char *bit);		//将单独字母转化为比特串
+int info_to_bit(char *Info, int Info_len, char *Info_temp);	//将传输数据转化为比特串 
+void print_info_bit(char *Info,int Info_len);	//打印数据比特串												
+void flag_fld_header(char *frame);		//初始化组帧帧头 
+void addr_fld(char *frame, char *Address);	//初始化组帧地址字段 												
+void control_fld(char *frame, char *Control);	//初始化组帧控制字段
+//int bit_stf(char *Info, int Info_len);		//数据字段字节扩充
+int info_fld(char *frame, char *Info, int Info_len);	//初始化组帧数据字段 
+int fcs_fld(char *frame,char *FCS,int frame_length);	//初始化组帧FCS字段
+int bit_stf(char *frame, int frame_length);	//0bit扩充
+int flag_fld_end(char *frame, int frame_length);	//初始化组帧帧尾 
+void print_frame(char *frame, int frame_length);	//打印组帧
+
+int Frameing(char *Address, char *Control, char *Info, int Info_len, char *FCS, char *frame);		//组帧操作 返回帧长 
+// ******************************************************************************************************************
+
+// initfield.h 初始化字段**********************************************************************************
+int init_control_fld(char *Control,int control_type); 		//控制字段生成 返回控制字段帧类型编号 
+int init_info_fld(char *Info, int info_type,char *Info_temp);	//根据控制字段帧类型编号 填充数据字段 返回数据字段长度 
+void init_fcs_fld(char *Info, char *FCS,int info_type);	//根据数据生成CRC校验码 
+void bin_div(char *inStr,char *outStr);			//bit除法 
+void checkCRC(char *inStr, char *outStr);		//CRC校验码生成 
+//*********************************************************************************************************
+
+//链接建立与拆除相关函数************************************************************************* 
+int build_SNRM_frame(char *Address);			//建立要发起连接的SARM连接帧  
+int build_UA_frame(char *Address);			//建立确认UA连接帧 
+int build_DISC_frame(char *Address);			//建立请求断连的DISC帧 
+int connect_to_addr(char * Address);			//与目的地址主机连接 	
+//void receive(char *frame);				//接收帧	
+//**************************************************************************************************************** 
+
+// 数据发送相关函数*********************************************************************************************** 
+int send(int flag);					//发送帧 返回发送的帧类型 
+int frame_parsing(char *frame, int frame_len, int info_len);	//帧解析函数 调用unframe函数 然后对帧进行解析
+void unframe(char *frame, int frame_len, int info_len, char *addr, char *cont, char *info, char *fcs);			//拆帧		
+int bit_del(char *frame, int len, char *frame1);		//0bit删除	
+// ***************************************************************************************************************
+ 
+//帧结构初始化函数 *********************************************************************************************** 
+void  init_frame();   				//清空全局变量Address,Control,Info,Info_temp,Info_len,FCS,frame以便下一帧传输使用 
+// *************************************************************************************************************** 
+
+//*帧解析相关函数*************************************************************************************************
+int control_parsing(char *recv_cont);		//解析控制字段 返回帧类型 
+void info_parsing(int fcs_flag, int con_type, char *recv_info, int info_len);//解析数据字段  
+int fcs_parsing(int con_type, char *recv_info, char *recv_fcs);		//进行CRC校验 成功返回1 否则返回0
+void bit_to_info(char *recv_info, int info_len);			//bit串转字符串 
+//****************************************************************************************************************
+
+//停等协议流程相关函数********************************************************************************************
+void num_to_str(int info_num, char *info_num_str);	//将序号转为二进制存放 
+int build_RR_frame(char *Address);			//建立RR确认帧 
+int build_SREJ_frame(char *Address);			//建立SREJ请求重发帧  
+//****************************************************************************************************************
+
