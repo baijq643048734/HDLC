@@ -1,80 +1,74 @@
-/*********************************************
-@ author : Bai Jiaqi °×¼Î÷è 
-@ ID : 161720328
-@ class: 1617203
-@ date : 2020/5/11
-@ instructor :Teacher Ye Haibo Ò¶º£²¨ÀÏÊ¦ 
-**********************************************/
+
 
 /*********************************************
-@ Íê³ÉÁËHDLC×î»ù±¾µÄĞ­ÒéÄÚÈİ,°üÀ¨:
-@ 1. ×éÖ¡ ²ğÖ¡ ¶ÔÖ¡½øĞĞ·ÖÎö
-@ 2. Á¬½ÓµÄ½¨Á¢Óë²ğ³ı
-@ 3. ÊµÓÃÍ£µÈĞ­ÒéµÄÄ£ÄâÑİÊ¾
-@ 4. CRCĞ£Ñé 
-@ Attention: ÓÉÓÚDev-C++ ±àÒëÆ÷¶àÎÄ¼şÁ¬±àÊ±
-@            ×ÜÊÇÕÒ²»µ½Í·ÎÄ¼şÄÚÈİ ¹Ê°ÑËùÓĞ
-@	º¯Êı¶¼·ÅÈëmain.cppÖĞ£¬Ôì³ÉÔÄ¶Á
-@	²»±ã ¾¡ÇéÁÂ½â! ^_^
+@ å®Œæˆäº†HDLCæœ€åŸºæœ¬çš„åè®®å†…å®¹,åŒ…æ‹¬:
+@ 1. ç»„å¸§ æ‹†å¸§ å¯¹å¸§è¿›è¡Œåˆ†æ
+@ 2. è¿æ¥çš„å»ºç«‹ä¸æ‹†é™¤
+@ 3. å®ç”¨åœç­‰åè®®çš„æ¨¡æ‹Ÿæ¼”ç¤º
+@ 4. CRCæ ¡éªŒ 
+@ Attention: ç”±äºDev-C++ ç¼–è¯‘å™¨å¤šæ–‡ä»¶è¿ç¼–æ—¶
+@            æ€»æ˜¯æ‰¾ä¸åˆ°å¤´æ–‡ä»¶å†…å®¹ æ•…æŠŠæ‰€æœ‰
+@	å‡½æ•°éƒ½æ”¾å…¥main.cppä¸­ï¼Œé€ æˆé˜…è¯»
+@	ä¸ä¾¿ å°½æƒ…è°…è§£! ^_^
 **********************************************/
 
-×¢£ºÔÚ±àĞ´¹ı³ÌÖĞÊ¹ÓÃµÄÊÇDev-C++±àÒëÆ÷£¬ÈôÀÏÊ¦Ê¹ÓÃVS¡¢Clion»òÆäËû±àÒëÆ÷£¬ÔòÎÄ¼şÖĞµÄÖĞÎÄ×¢ÊÍ¿ÉÄÜ»á³ÉÂÒÂë¡£
+æ³¨ï¼šåœ¨ç¼–å†™è¿‡ç¨‹ä¸­ä½¿ç”¨çš„æ˜¯Dev-C++ç¼–è¯‘å™¨ï¼Œè‹¥è€å¸ˆä½¿ç”¨VSã€Clionæˆ–å…¶ä»–ç¼–è¯‘å™¨ï¼Œåˆ™æ–‡ä»¶ä¸­çš„ä¸­æ–‡æ³¨é‡Šå¯èƒ½ä¼šæˆä¹±ç ã€‚
 
-/ frame.h´Ë´¦º¯Êı¾ùÎª×éÖ¡²Ù×÷ÄÚ²¿µ÷ÓÃº¯Êı************											
-int _2_x(int x);			//2µÄx´Î·½
-void char_to_bit(char letter, char *bit);		//½«µ¥¶À×ÖÄ¸×ª»¯Îª±ÈÌØ´®
-int info_to_bit(char *Info, int Info_len, char *Info_temp);	//½«´«ÊäÊı¾İ×ª»¯Îª±ÈÌØ´® 
-void print_info_bit(char *Info,int Info_len);	//´òÓ¡Êı¾İ±ÈÌØ´®												
-void flag_fld_header(char *frame);		//³õÊ¼»¯×éÖ¡Ö¡Í· 
-void addr_fld(char *frame, char *Address);	//³õÊ¼»¯×éÖ¡µØÖ·×Ö¶Î 												
-void control_fld(char *frame, char *Control);	//³õÊ¼»¯×éÖ¡¿ØÖÆ×Ö¶Î
-//int bit_stf(char *Info, int Info_len);		//Êı¾İ×Ö¶Î×Ö½ÚÀ©³ä
-int info_fld(char *frame, char *Info, int Info_len);	//³õÊ¼»¯×éÖ¡Êı¾İ×Ö¶Î 
-int fcs_fld(char *frame,char *FCS,int frame_length);	//³õÊ¼»¯×éÖ¡FCS×Ö¶Î
-int bit_stf(char *frame, int frame_length);	//0bitÀ©³ä
-int flag_fld_end(char *frame, int frame_length);	//³õÊ¼»¯×éÖ¡Ö¡Î² 
-void print_frame(char *frame, int frame_length);	//´òÓ¡×éÖ¡
+/ frame.hæ­¤å¤„å‡½æ•°å‡ä¸ºç»„å¸§æ“ä½œå†…éƒ¨è°ƒç”¨å‡½æ•°************											
+int _2_x(int x);			//2çš„xæ¬¡æ–¹
+void char_to_bit(char letter, char *bit);		//å°†å•ç‹¬å­—æ¯è½¬åŒ–ä¸ºæ¯”ç‰¹ä¸²
+int info_to_bit(char *Info, int Info_len, char *Info_temp);	//å°†ä¼ è¾“æ•°æ®è½¬åŒ–ä¸ºæ¯”ç‰¹ä¸² 
+void print_info_bit(char *Info,int Info_len);	//æ‰“å°æ•°æ®æ¯”ç‰¹ä¸²												
+void flag_fld_header(char *frame);		//åˆå§‹åŒ–ç»„å¸§å¸§å¤´ 
+void addr_fld(char *frame, char *Address);	//åˆå§‹åŒ–ç»„å¸§åœ°å€å­—æ®µ 												
+void control_fld(char *frame, char *Control);	//åˆå§‹åŒ–ç»„å¸§æ§åˆ¶å­—æ®µ
+//int bit_stf(char *Info, int Info_len);		//æ•°æ®å­—æ®µå­—èŠ‚æ‰©å……
+int info_fld(char *frame, char *Info, int Info_len);	//åˆå§‹åŒ–ç»„å¸§æ•°æ®å­—æ®µ 
+int fcs_fld(char *frame,char *FCS,int frame_length);	//åˆå§‹åŒ–ç»„å¸§FCSå­—æ®µ
+int bit_stf(char *frame, int frame_length);	//0bitæ‰©å……
+int flag_fld_end(char *frame, int frame_length);	//åˆå§‹åŒ–ç»„å¸§å¸§å°¾ 
+void print_frame(char *frame, int frame_length);	//æ‰“å°ç»„å¸§
 
-int Frameing(char *Address, char *Control, char *Info, int Info_len, char *FCS, char *frame);		//×éÖ¡²Ù×÷ ·µ»ØÖ¡³¤ 
+int Frameing(char *Address, char *Control, char *Info, int Info_len, char *FCS, char *frame);		//ç»„å¸§æ“ä½œ è¿”å›å¸§é•¿ 
 // ******************************************************************************************************************
 
-// initfield.h ³õÊ¼»¯×Ö¶Î**********************************************************************************
-int init_control_fld(char *Control,int control_type); 		//¿ØÖÆ×Ö¶ÎÉú³É ·µ»Ø¿ØÖÆ×Ö¶ÎÖ¡ÀàĞÍ±àºÅ 
-int init_info_fld(char *Info, int info_type,char *Info_temp);	//¸ù¾İ¿ØÖÆ×Ö¶ÎÖ¡ÀàĞÍ±àºÅ Ìî³äÊı¾İ×Ö¶Î ·µ»ØÊı¾İ×Ö¶Î³¤¶È 
-void init_fcs_fld(char *Info, char *FCS,int info_type);	//¸ù¾İÊı¾İÉú³ÉCRCĞ£ÑéÂë 
-void bin_div(char *inStr,char *outStr);			//bit³ı·¨ 
-void checkCRC(char *inStr, char *outStr);		//CRCĞ£ÑéÂëÉú³É 
+// initfield.h åˆå§‹åŒ–å­—æ®µ**********************************************************************************
+int init_control_fld(char *Control,int control_type); 		//æ§åˆ¶å­—æ®µç”Ÿæˆ è¿”å›æ§åˆ¶å­—æ®µå¸§ç±»å‹ç¼–å· 
+int init_info_fld(char *Info, int info_type,char *Info_temp);	//æ ¹æ®æ§åˆ¶å­—æ®µå¸§ç±»å‹ç¼–å· å¡«å……æ•°æ®å­—æ®µ è¿”å›æ•°æ®å­—æ®µé•¿åº¦ 
+void init_fcs_fld(char *Info, char *FCS,int info_type);	//æ ¹æ®æ•°æ®ç”ŸæˆCRCæ ¡éªŒç  
+void bin_div(char *inStr,char *outStr);			//bité™¤æ³• 
+void checkCRC(char *inStr, char *outStr);		//CRCæ ¡éªŒç ç”Ÿæˆ 
 //*********************************************************************************************************
 
-//Á´½Ó½¨Á¢Óë²ğ³ıÏà¹Øº¯Êı************************************************************************* 
-int build_SNRM_frame(char *Address);			//½¨Á¢Òª·¢ÆğÁ¬½ÓµÄSARMÁ¬½ÓÖ¡  
-int build_UA_frame(char *Address);			//½¨Á¢È·ÈÏUAÁ¬½ÓÖ¡ 
-int build_DISC_frame(char *Address);			//½¨Á¢ÇëÇó¶ÏÁ¬µÄDISCÖ¡ 
-int connect_to_addr(char * Address);			//ÓëÄ¿µÄµØÖ·Ö÷»úÁ¬½Ó 	
-//void receive(char *frame);				//½ÓÊÕÖ¡	
+//é“¾æ¥å»ºç«‹ä¸æ‹†é™¤ç›¸å…³å‡½æ•°************************************************************************* 
+int build_SNRM_frame(char *Address);			//å»ºç«‹è¦å‘èµ·è¿æ¥çš„SARMè¿æ¥å¸§  
+int build_UA_frame(char *Address);			//å»ºç«‹ç¡®è®¤UAè¿æ¥å¸§ 
+int build_DISC_frame(char *Address);			//å»ºç«‹è¯·æ±‚æ–­è¿çš„DISCå¸§ 
+int connect_to_addr(char * Address);			//ä¸ç›®çš„åœ°å€ä¸»æœºè¿æ¥ 	
+//void receive(char *frame);				//æ¥æ”¶å¸§	
 //**************************************************************************************************************** 
 
-// Êı¾İ·¢ËÍÏà¹Øº¯Êı*********************************************************************************************** 
-int send(int flag);					//·¢ËÍÖ¡ ·µ»Ø·¢ËÍµÄÖ¡ÀàĞÍ 
-int frame_parsing(char *frame, int frame_len, int info_len);	//Ö¡½âÎöº¯Êı µ÷ÓÃunframeº¯Êı È»ºó¶ÔÖ¡½øĞĞ½âÎö
-void unframe(char *frame, int frame_len, int info_len, char *addr, char *cont, char *info, char *fcs);			//²ğÖ¡		
-int bit_del(char *frame, int len, char *frame1);		//0bitÉ¾³ı	
+// æ•°æ®å‘é€ç›¸å…³å‡½æ•°*********************************************************************************************** 
+int send(int flag);					//å‘é€å¸§ è¿”å›å‘é€çš„å¸§ç±»å‹ 
+int frame_parsing(char *frame, int frame_len, int info_len);	//å¸§è§£æå‡½æ•° è°ƒç”¨unframeå‡½æ•° ç„¶åå¯¹å¸§è¿›è¡Œè§£æ
+void unframe(char *frame, int frame_len, int info_len, char *addr, char *cont, char *info, char *fcs);			//æ‹†å¸§		
+int bit_del(char *frame, int len, char *frame1);		//0bitåˆ é™¤	
 // ***************************************************************************************************************
  
-//Ö¡½á¹¹³õÊ¼»¯º¯Êı *********************************************************************************************** 
-void  init_frame();   				//Çå¿ÕÈ«¾Ö±äÁ¿Address,Control,Info,Info_temp,Info_len,FCS,frameÒÔ±ãÏÂÒ»Ö¡´«ÊäÊ¹ÓÃ 
+//å¸§ç»“æ„åˆå§‹åŒ–å‡½æ•° *********************************************************************************************** 
+void  init_frame();   				//æ¸…ç©ºå…¨å±€å˜é‡Address,Control,Info,Info_temp,Info_len,FCS,frameä»¥ä¾¿ä¸‹ä¸€å¸§ä¼ è¾“ä½¿ç”¨ 
 // *************************************************************************************************************** 
 
-//*Ö¡½âÎöÏà¹Øº¯Êı*************************************************************************************************
-int control_parsing(char *recv_cont);		//½âÎö¿ØÖÆ×Ö¶Î ·µ»ØÖ¡ÀàĞÍ 
-void info_parsing(int fcs_flag, int con_type, char *recv_info, int info_len);//½âÎöÊı¾İ×Ö¶Î  
-int fcs_parsing(int con_type, char *recv_info, char *recv_fcs);		//½øĞĞCRCĞ£Ñé ³É¹¦·µ»Ø1 ·ñÔò·µ»Ø0
-void bit_to_info(char *recv_info, int info_len);			//bit´®×ª×Ö·û´® 
+//*å¸§è§£æç›¸å…³å‡½æ•°*************************************************************************************************
+int control_parsing(char *recv_cont);		//è§£ææ§åˆ¶å­—æ®µ è¿”å›å¸§ç±»å‹ 
+void info_parsing(int fcs_flag, int con_type, char *recv_info, int info_len);//è§£ææ•°æ®å­—æ®µ  
+int fcs_parsing(int con_type, char *recv_info, char *recv_fcs);		//è¿›è¡ŒCRCæ ¡éªŒ æˆåŠŸè¿”å›1 å¦åˆ™è¿”å›0
+void bit_to_info(char *recv_info, int info_len);			//bitä¸²è½¬å­—ç¬¦ä¸² 
 //****************************************************************************************************************
 
-//Í£µÈĞ­ÒéÁ÷³ÌÏà¹Øº¯Êı********************************************************************************************
-void num_to_str(int info_num, char *info_num_str);	//½«ĞòºÅ×ªÎª¶ş½øÖÆ´æ·Å 
-int build_RR_frame(char *Address);			//½¨Á¢RRÈ·ÈÏÖ¡ 
-int build_SREJ_frame(char *Address);			//½¨Á¢SREJÇëÇóÖØ·¢Ö¡  
+//åœç­‰åè®®æµç¨‹ç›¸å…³å‡½æ•°********************************************************************************************
+void num_to_str(int info_num, char *info_num_str);	//å°†åºå·è½¬ä¸ºäºŒè¿›åˆ¶å­˜æ”¾ 
+int build_RR_frame(char *Address);			//å»ºç«‹RRç¡®è®¤å¸§ 
+int build_SREJ_frame(char *Address);			//å»ºç«‹SREJè¯·æ±‚é‡å‘å¸§  
 //****************************************************************************************************************
 
